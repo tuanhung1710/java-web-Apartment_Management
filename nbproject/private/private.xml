@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group name="PRJ301">
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/web/views/bql/dashboard.jsp</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/dao/UserDAO.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/dao/TaskDAO.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/dao/BillingDAO.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/web/views/bql/create-invoice.jsp</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/controller/StaffTaskServlet.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/web/views/bql/request-manage.jsp</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/web/create-apartment.jsp</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/web/index.jsp</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/controller/ApartmentCreateServlet.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/dao/RequestDAO.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/dao/DBContext.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/controller/BillingCreateServlet.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/src/java/dao/ApartmentDAO.java</file>
+            <file>file:/D:/S4/PRJ301/Assigment/Apartment_Management/web/create-request.jsp</file>
+        </group>
+    </open-files>
+</project-private>
