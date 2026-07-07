@@ -123,10 +123,10 @@ public class RequestCreateServlet extends HttpServlet {
         if (success) {
             // Chuyển hướng sang danh sách yêu cầu
             session.setAttribute("successMessage", "Đã gửi yêu cầu hỗ trợ thành công!");
-            response.sendRedirect(request.getContextPath() + "/resident/request/list");
+            response.sendRedirect(request.getContextPath() + "/resident/home?success=request_created");
         } else {
             request.setAttribute("globalError", "Đã xảy ra lỗi kết nối Database. Vui lòng thử lại sau.");
-            request.getRequestDispatcher("/create-request.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/resident/create-request.jsp").forward(request, response);
         }
     }
 }

@@ -10,16 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends DBContext {
-    
+
     public List<User> getStaffList() {
         List<User> list = new ArrayList<>();
         // Trong bảng users, ID là user_id và mật khẩu là password_hash
         String sql = "SELECT user_id, username, password_hash, role, status FROM users WHERE role IN ('TECHNICIAN', 'RECEPTIONIST', 'GUARD') AND status = 'ACTIVE'";
-        
+
         try (Connection conn = this.connection;
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-             
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 User u = new User();
                 u.setId(rs.getInt("user_id"));
@@ -33,5 +33,61 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     * Lấy thông tin User bằng username để kiểm tra đăng nhập.
+     */
+    public User getUserByUsername(String username) {
+        // Sử dụng PreparedStatement để chống SQL Injection tuyệt đối
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        try (Connection conn = this.connection;
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    User u = new User();
+                    u.setId(rs.getInt("user_id"));
+                    u.setUsername(rs.getString("username"));
+                    u.setPassword(rs.getString("password_hash"));
+                    u.setRole(rs.getString("role"));
+                    u.setStatus(rs.getString("status"));
+                    return u;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Bắt buộc return null nếu KHÔNG tìm thấy
+        return null;
+    }
+
+    /**
+     * Đổi mật khẩu người dùng
+     * @param userId ID của người dùng
+     * @param oldPass Mật khẩu cũ (đã hash hoặc dummy)
+     * @param newPass Mật khẩu mới (đã hash)
+     * @return true nếu đổi thành công
+     */
+    public boolean changePassword(int userId, String oldPass, String newPass) {
+        String sql = "UPDATE users SET password_hash = ?, status = 'ACTIVE' WHERE user_id = ? AND password_hash = ?";
+        try (Connection conn = this.connection;
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, newPass);
+            ps.setInt(2, userId);
+            ps.setString(3, oldPass);
+            
+            int rowAffected = ps.executeUpdate();
+            return rowAffected > 0;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

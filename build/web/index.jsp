@@ -241,7 +241,7 @@
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                                         <input type="text" class="form-control border-start-0" id="username" name="username" 
-                                               placeholder="Nhập email hoặc SĐT" required value="${param.username}">
+                                               placeholder="Nhập email hoặc SĐT" required value="${not empty param.username ? param.username : cookie.username.value}">
                                     </div>
                                 </div>
 
@@ -251,7 +251,7 @@
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-text"><i class="bi bi-lock"></i></span>
                                         <input type="password" class="form-control border-start-0" id="password" name="password" 
-                                               placeholder="Nhập mật khẩu" required>
+                                               placeholder="Nhập mật khẩu" required value="${cookie.password.value}">
                                         <!-- Nút toggle ẩn hiện pass -->
                                         <button class="btn border border-start-0 bg-transparent text-muted" type="button" id="togglePassword">
                                             <i class="bi bi-eye-slash" id="toggleIcon"></i>
@@ -262,7 +262,7 @@
                                 <!-- Remember & Forgot Password Link -->
                                 <div class="d-flex justify-content-between align-items-center mb-4 pb-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                                        <input class="form-check-input" type="checkbox" id="remember" name="remember" ${not empty cookie.username ? 'checked' : ''}>
                                         <label class="form-check-label text-muted user-select-none" for="remember">
                                             Nhớ tài khoản
                                         </label>

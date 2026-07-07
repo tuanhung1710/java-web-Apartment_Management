@@ -6,75 +6,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chốt Chỉ Số & Xuất Hóa Đơn - BQL Skyline Apartment</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f4f6f9; }
         .wrapper { display: flex; width: 100%; height: 100vh; overflow: hidden; }
-        .sidebar { width: 250px; background-color: #1e293b; color: #fff; display: flex; flex-direction: column; transition: all 0.3s ease; z-index: 1000; }
-        .sidebar-header { padding: 20px; font-size: 1.25rem; font-weight: 700; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        .sidebar-menu { list-style: none; padding: 10px 0; margin: 0; flex-grow: 1; overflow-y: auto; }
-        .sidebar-menu li { padding: 4px 15px; }
-        .sidebar-menu a { color: #cbd5e1; text-decoration: none; display: flex; align-items: center; font-size: 0.95rem; font-weight: 500; padding: 10px 15px; border-radius: 8px; transition: 0.2s; }
-        .sidebar-menu a:hover, .sidebar-menu a.active { background-color: rgba(255, 255, 255, 0.1); color: #fff; }
-        .sidebar-menu a.active { background-color: #0d6efd; }
-        .sidebar-menu i { margin-right: 12px; font-size: 1.2rem; }
         .main-content { flex-grow: 1; display: flex; flex-direction: column; overflow-y: auto; }
-        .top-navbar { height: 64px; background-color: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0; }
         .content-area { padding: 24px; }
         
         .form-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: none; padding: 30px; }
         .water-index-box { background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-top: 10px; }
-
-        @media (max-width: 991.98px) {
-            .sidebar { position: fixed; height: 100%; left: -250px; }
-            .sidebar.show { left: 0; }
-            .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 999; }
-            .sidebar-overlay.show { display: block; }
-        }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header d-flex align-items-center">
-            <i class="bi bi-buildings-fill fs-3 me-2 text-primary"></i> 
-            <span class="fs-5">Skyline Admin</span>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="${pageContext.request.contextPath}/bql/dashboard"><i class="bi bi-grid-1x2-fill"></i> Trang chủ</a></li>
-            <li><a href="#"><i class="bi bi-door-closed"></i> Quản lý Căn hộ</a></li>
-            <li><a href="#"><i class="bi bi-people-fill"></i> Quản lý Cư dân</a></li>
-            <li><a href="${pageContext.request.contextPath}/bql/billing/create" class="active"><i class="bi bi-cash-stack"></i> Thu phí Dịch vụ</a></li>
-            <li><a href="${pageContext.request.contextPath}/bql/request/manage"><i class="bi bi-tools"></i> Quản lý Yêu cầu</a></li>
-            <li><a href="#"><i class="bi bi-gear-fill"></i> Cài đặt</a></li>
-        </ul>
-    </nav>
+    <jsp:include page="layout/sidebar.jsp">
+        <jsp:param name="activeMenu" value="billing"/>
+    </jsp:include>
 
     <!-- Main Content -->
     <div class="main-content">
-        <header class="top-navbar">
-            <div class="d-flex align-items-center">
-                <button class="btn btn-light d-lg-none me-3" id="sidebarToggle"><i class="bi bi-list fs-5"></i></button>
-                <h5 class="mb-0 fw-bold d-none d-md-block text-secondary">Hệ Thống Tính Phí & Xuất Hóa Đơn</h5>
-            </div>
-            <div class="d-flex align-items-center">
-                <div class="dropdown">
-                    <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://ui-avatars.com/api/?name=${sessionScope.currentUser.username}&background=0d6efd&color=fff" width="36" height="36" class="rounded-circle me-2">
-                        <span class="fw-medium d-none d-sm-block"><c:out value="${sessionScope.currentUser.username}"/></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                        <li><a class="dropdown-item py-2 text-danger fw-medium" href="${pageContext.request.contextPath}/logout"><i class="bi bi-box-arrow-right me-2"></i> Đăng xuất</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
+        <jsp:include page="layout/header.jsp" />
 
         <main class="content-area">
             
@@ -160,26 +117,7 @@
     </div>
 </div>
 
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const sidebarToggle = document.getElementById("sidebarToggle");
-        const sidebar = document.getElementById("sidebar");
-        const sidebarOverlay = document.getElementById("sidebarOverlay");
-
-        if(sidebarToggle) {
-            sidebarToggle.addEventListener("click", function() {
-                sidebar.classList.add("show");
-                sidebarOverlay.classList.add("show");
-            });
-        }
-        if(sidebarOverlay) {
-            sidebarOverlay.addEventListener("click", function() {
-                sidebar.classList.remove("show");
-                sidebarOverlay.classList.remove("show");
-            });
-        }
-    });
-</script>
 </body>
 </html>

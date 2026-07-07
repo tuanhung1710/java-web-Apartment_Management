@@ -24,7 +24,7 @@ public class ApartmentCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Method GET: Trả về trang create-apartment.jsp.
-        request.getRequestDispatcher("/create-apartment.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/bql/create-apartment.jsp").forward(request, response);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ApartmentCreateServlet extends HttpServlet {
         if (!errors.isEmpty()) {
             request.setAttribute("errors", errors);
             // Forward lại trang form để hiển thị lỗi, view sẽ giữ nguyên data param để user không phải nhập lại
-            request.getRequestDispatcher("/create-apartment.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/bql/create-apartment.jsp").forward(request, response);
             return;
         }
 
@@ -92,7 +92,7 @@ public class ApartmentCreateServlet extends HttpServlet {
         user.setUsername(email); // email dùng làm username
         user.setPassword(hashedPassword);
         user.setRole("RESIDENT"); // Set role là RESIDENT
-        user.setStatus("ACTIVE");
+        user.setStatus("REQUIRE_PASSWORD_CHANGE"); // Bắt buộc đổi mật khẩu lần đầu
 
         Apartment apt = new Apartment();
         apt.setApartmentCode(apartmentCode);
@@ -114,11 +114,11 @@ public class ApartmentCreateServlet extends HttpServlet {
             // Nếu trả về true -> redirect sang danh sách căn hộ kèm thông báo thành công.
             // Có thể dùng session để chuyển tin nhắn mật khẩu sang trang list
             request.getSession().setAttribute("successMessage", "Khởi tạo căn hộ và gán chủ hộ thành công! Mật khẩu mặc định: " + rawPassword);
-            response.sendRedirect(request.getContextPath() + "/bql/apartment/list");
+            response.sendRedirect(request.getContextPath() + "/bql/dashboard?success=apartment_created");
         } else {
             // Nếu false -> forward lại form kèm thông báo lỗi
             request.setAttribute("globalError", "Hệ thống bận hoặc dữ liệu bị trùng lặp (CCCD, Mã căn hộ hoặc Email đã tồn tại).");
-            request.getRequestDispatcher("/create-apartment.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/bql/create-apartment.jsp").forward(request, response);
         }
     }
 

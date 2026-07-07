@@ -9,6 +9,10 @@ public class Resident {
     private String cccd;
     private String relationship;
     private boolean isRepresentative;
+    
+    // Transient properties cho mục đích hiển thị
+    private String apartmentCode;
+    private String email;
 
     public Resident() {
     }
@@ -22,6 +26,22 @@ public class Resident {
         this.cccd = cccd;
         this.relationship = relationship;
         this.isRepresentative = isRepresentative;
+    }
+
+    public String getApartmentCode() {
+        return apartmentCode;
+    }
+
+    public void setApartmentCode(String apartmentCode) {
+        this.apartmentCode = apartmentCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     // Getters and Setters
